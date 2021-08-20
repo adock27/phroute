@@ -1,0 +1,74 @@
+CREAR UN PROYECTO EN ANGULAR
+
+ng new nombredeproyecto
+
+
+-- Abrir el proyecto en el servidor local
+
+ng serve -o
+
+-- Crear componente
+ng g c heroes/listado
+
+
+-- Crear un modulo
+ng g m shared
+
+--Crear un servicio 
+ng g s nombreServicio
+
+
+
+-- SOLUCIONAR EL ERROR DE LAS RUTAS
+routerModule.forRoot(routes, { useHash: true }),
+
+-- subir a git
+
+git add.
+git commit -m "first commit"
+
+
+git remote add origin https://github.com/adock27/angular-basicos.git
+git branch -M main
+git push -u origin main
+
+
+-- Para hacer una version anotada
+
+git tag -a v0.1.0 -m "Fin seccion 4"
+
+-- verificamos el tag 
+git tag
+
+-- subir el cambio
+git push --tags
+
+
+--para activar las navs links
+en caso de que el nav del router no funciona
+[routerLinkActiveOptions]='{exact:true}'
+
+<ul class="list-group shadow mb-4">
+      <li class="list-group-item" routerLink='' routerLinkActive='active'
+      [routerLinkActiveOptions]='{exact:true}'>Buscar Pais</li>
+      <li class="list-group-item" routerLink='region' routerLinkActive='active'>Buscar Region</li>
+      <li class="list-group-item" routerLink='capital' routerLinkActive='active'>Buscar Capital</li>
+      <li class="list-group-item" routerLink='about' routerLinkActive='active'>About</li>
+    </ul>
+
+
+-- HACER UNA BUIL DE PRODUCCION 
+
+1 - verificar ningun error
+2 - limpiar codigo inutilizable
+
+
+-- generar build de produccion
+ng build --prod
+
+https://app.netlify.com/teams/adock27/overview
+
+
+prime ng para diseños
+
+npm install primeng primeicons
