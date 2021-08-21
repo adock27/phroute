@@ -32,16 +32,15 @@ $collector->get('metas/ver/{id}', function ($id) {
 
     $con = new MetaModel();
     $data = $con->GetMetaPorId($id);
-    print_r($data);
-    echo $id;
+    // print_r($data);
+    include_once 'views/metas/ver.php';
 });
 
 $collector->get('metas/editar/{id}', function ($id) {
 
     $con = new MetaModel();
     $data = $con->GetMetaPorId($id);
-    print_r($data);
-    echo $id;
+    // print_r($data);
     include_once 'views/metas/editar.php';
 });
 
