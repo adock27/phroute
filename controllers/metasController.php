@@ -1,59 +1,55 @@
 <?php
-$collector->post('/metaadd', function () {
+
+
+// Post 
+$collector->post('AddMeta', function () {
     print_r($_POST);
     $con = new MetaModel();
-    $data = $con->MetaCreate($_POST);
+    $data = $con->AddMeta($_POST);
     header('Location: ./metas');
 });
 
-$collector->post('/ingresoadd', function () {
+$collector->post('UpdateMeta', function () {
     print_r($_POST);
-    $con = new IngresoModel();
-    $data = $con->ingresoCreate($_POST);
-    header('Location: ./ver-meta/'.$_POST['id'].'');
+    $con = new MetaModel();
+    $data = $con->UpdateMeta($_POST);
+    header('Location: ./metas');
 });
 
+$collector->get('metas', function () {
 
-$collector->get('/metas', function () {
-
-    $con1   = new MetaModel();
-    $data1  = $con1->MetaList();
-    // print_r($data1);
-    include_once 'views/metas.php';
+    $con   = new MetaModel();
+    $data  = $con->GetMetas();
+    // print_r($data);
+    include_once 'views/metas/metas.php';
 });
 
-$collector->any('ver-meta/{id}', function($id){
-    $con1   = new MetaModel();
-    $data1  = $con1->GetMeta($id);
-    $data2  = $con1->MetaGetIngresos($id);
-    // print_r($data1);
-    // echo '<br>';
-    // print_r($data2);
-
-
-
-include_once 'views/ver-meta.php';
-
+$collector->get('metas/agregar', function () {
+    include_once 'views/metas/agregar.php';
 });
 
-$collector->any('eliminar-ingreso-meta/{id}', function($id){
-    $con1   = new IngresoModel();
-    $data2  = $con1->getIngresoPorId($id);
-    $mensaje  = $con1->deleteIngresoPorId($id);
-    // print_r($data1);
-    // echo '<br>';
-    // print_r($data2);
+$collector->get('metas/ver/{id}', function ($id) {
 
-    include_once 'views/eliminar-ingreso-meta.php';
-
+    $con = new MetaModel();
+    $data = $con->GetMetaPorId($id);
+    print_r($data);
+    echo $id;
 });
 
-$collector->any('eliminar-meta/{id}', function($id){
-    $con1   = new IngresoModel();
-    $mensaje  = $con1->deleteMeta($id);
+$collector->get('metas/editar/{id}', function ($id) {
+
+    $con = new MetaModel();
+    $data = $con->GetMetaPorId($id);
+    print_r($data);
+    echo $id;
+    include_once 'views/metas/editar.php';
+});
+
+$collector->get('metas/eliminar/{id}', function ($id) {
+
+    $con = new MetaModel();
+    $data = $con->DeleteMeta($id);
+    print_r($data);
     header('Location: /appblank/metas');
-    // print_r($data1);
-    // echo '<br>';
-    // print_r($data2);
-
 });
+

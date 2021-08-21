@@ -18,7 +18,9 @@ class MetaModel
         mysqli_close($this->db);
     }
 
-    function MetaCreate($data)
+
+
+    function AddMeta($data)
     {
         $this->abrir_conexion();
 
@@ -38,17 +40,9 @@ class MetaModel
         $this->cerrar_conexion();
     }
 
-    function GetMeta($id)
-    {
-        $this->abrir_conexion();
-        $sql        = "SELECT * FROM metas where meta_id = '{$id}'";
-        $resultado  = mysqli_query($this->db, $sql);
-        $row = mysqli_fetch_assoc($resultado);
-        return $row;
-        $this->cerrar_conexion();
-    }
 
-    function MetaList()
+
+    function GetMetas()
     {
         $this->abrir_conexion();
         $sql        = "SELECT * FROM metas order by meta_id";
@@ -62,36 +56,46 @@ class MetaModel
         $this->cerrar_conexion();
     }
 
-
-
-
-    function MetaDelete($codigo)
+    function GetMetaPorId($id)
     {
         $this->abrir_conexion();
-        $sql = "DELETE FROM ofertas WHERE id_oferta ='$codigo'";
+        $sql        = "SELECT * FROM metas where meta_id = '{$id}'";
+        $resultado  = mysqli_query($this->db, $sql);
+        $row = mysqli_fetch_assoc($resultado);
+        return $row;
+        $this->cerrar_conexion();
+    }
+
+
+
+    function DeleteMeta($id)
+    {
+        $this->abrir_conexion();
+
+        $sql = "DELETE FROM metas WHERE meta_id ='$id'";
 
         if (mysqli_query($this->db, $sql)) {
             $msj = "Usuario eliminado satisfactoriamente";
         } else {
             $msj = "error en la eliminacion " . mysqli_error($this->db);
         }
-
-        mysqli_close($this->db);
-
-        return $msj;
+        
         $this->cerrar_conexion();
+        return $msj;
     }
 
-    function MetaUpdate($id, $data)
+    function UpdateMeta($data)
     {
 
-        $id = $id;
-        $nombre = $data[0]['nombre'];
-        $descripcion = $data[0]['descripcion'];
+
+        $id = $data['id'];
+        $meta = $data['meta'];
+        $tope = $data['tope'];
 
 
-
-        $sql = "UPDATE ofertas SET nombre='$nombre',descripcion = '$descripcion' WHERE id='$id'";
+        $this->abrir_conexion();
+        
+        $sql = "UPDATE metas set meta_nombre = '$meta' , tope = '$tope' WHERE meta_id = '$id'";
 
         if (mysqli_query($this->db, $sql)) {
             $msj = "usuario actualizado correctamente";
@@ -99,23 +103,7 @@ class MetaModel
             $msj = "error en la actualizacion " . mysqli_error($this->db);
         }
 
-        mysqli_close($this->db);
-
         return $msj;
-    }
-
-
-    function MetaGetIngresos($id){
-        $this->abrir_conexion();
-        $datos = array();
-        $sql        = "SELECT * FROM ingresos where meta_id = '{$id}' ";
-        $resultado  = mysqli_query($this->db, $sql);
-
-        while ($row = mysqli_fetch_assoc($resultado)) {
-            $datos[] = $row;
-        }
-
-        return $datos;
         $this->cerrar_conexion();
     }
 }

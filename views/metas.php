@@ -1,26 +1,5 @@
-<!doctype html>
-<html lang="en">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            font-size: 10pt;
-        }
-    </style>
-    <title>Hello, world!</title>
-</head>
-
-<body class="bg-light">
-
+<?php include_once 'shared/header.php' ?>
 
 
     <section class="container mt-5">
@@ -79,14 +58,10 @@
         </div>
     </section>
 
-    <div class=" container col-4 mt-3 shadow card-body bg-white" style="border-radius: 13px;">
-        <i class="bi bi-bank"></i>
-        <?php
-        $con = new IngresoModel();
-        $sumaIngresos = $con->GetSuma();
-        echo 'Total invertido $ ' . number_format($sumaIngresos['SUM(ingreso_valor)']);
-        ?>
 
+
+    <div class="container">
+        <a href="./agregar-meta" class="btn btn-success">Agregar meta</a>
     </div>
 
     <section class="container mt-5 ">
@@ -124,6 +99,7 @@
                                 <td>$ <?= number_format($data1[$i]['tope']); ?></td>
                                 <td>
                                     <a class="btn " href="./ver-meta/<?= $data1[$i]['meta_id']; ?>"><i class="bi bi-eye"></i></a>
+                                    <a class="btn " href="./agregar-meta/<?= $data1[$i]['meta_id']; ?>"><i class="bi bi-pencil"></i></a>
                                     <a class="btn " href="./eliminar-meta/<?= $data1[$i]['meta_id']; ?>"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
@@ -135,9 +111,7 @@
         </div>
     </section>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-
+    
     <style>
         .bg-success {
             background: #00F260;
