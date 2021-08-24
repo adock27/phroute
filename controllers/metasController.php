@@ -19,8 +19,8 @@ $collector->post('UpdateMeta', function () {
 $collector->get('metas', function () {
 
     $con   = new MetaModel();
-    $data  = $con->GetMetas();
-    // print_r($data);
+    $data  = $con->GetMetasWithTotal();
+    
     include_once 'views/metas/metas.php';
 });
 
@@ -32,6 +32,10 @@ $collector->get('metas/ver/{id}', function ($id) {
 
     $con = new MetaModel();
     $data = $con->GetMetaPorId($id);
+
+    $conIngreso = new IngresoModel();
+    $data_ingreso = $conIngreso -> GetIngresos($id);
+    // print_r($data_ingreso);
     // print_r($data);
     include_once 'views/metas/ver.php';
 });
@@ -40,7 +44,7 @@ $collector->get('metas/editar/{id}', function ($id) {
 
     $con = new MetaModel();
     $data = $con->GetMetaPorId($id);
-    // print_r($data);
+
     include_once 'views/metas/editar.php';
 });
 

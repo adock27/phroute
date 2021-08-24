@@ -18,8 +18,7 @@ class MetaModel
         mysqli_close($this->db);
     }
 
-
-
+    // metodos crud 
     function AddMeta($data)
     {
         $this->abrir_conexion();
@@ -40,8 +39,19 @@ class MetaModel
         $this->cerrar_conexion();
     }
 
+    function GetMetasWithTotal()
+    {
+        $this->abrir_conexion();
+        $sql = "SELECT metas.meta_id, metas.meta_nombre , metas.tope , SUM(ingresos.ingreso_valor) as total  FROM metas LEFT JOIN ingresos on metas.meta_id = ingresos.meta_id GROUP BY metas.meta_id";
+        $resultado  = mysqli_query($this->db, $sql);
 
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $datos[] = $row;
+        }
 
+        return $datos;
+        $this->cerrar_conexion();
+    }
     function GetMetas()
     {
         $this->abrir_conexion();
@@ -66,8 +76,11 @@ class MetaModel
         $this->cerrar_conexion();
     }
 
+    
 
 
+
+    
     function DeleteMeta($id)
     {
         $this->abrir_conexion();
@@ -79,7 +92,7 @@ class MetaModel
         } else {
             $msj = "error en la eliminacion " . mysqli_error($this->db);
         }
-        
+
         $this->cerrar_conexion();
         return $msj;
     }
@@ -94,7 +107,7 @@ class MetaModel
 
 
         $this->abrir_conexion();
-        
+
         $sql = "UPDATE metas set meta_nombre = '$meta' , tope = '$tope' WHERE meta_id = '$id'";
 
         if (mysqli_query($this->db, $sql)) {
