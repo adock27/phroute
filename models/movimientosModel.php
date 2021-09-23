@@ -1,7 +1,7 @@
 <?php
 require_once("./database/db.php"); //establecer conexion con la base de datos
 
-class UserModel
+class MovimientosModel
 {
 
     private $db;
@@ -18,13 +18,15 @@ class UserModel
         mysqli_close($this->db);
     }
 
-    function UserCreate($data)
+    // metodos crud 
+    function AddMovimiento($data)
     {
         $this->abrir_conexion();
 
-        $username = $data['username'];
+        $name = $data['meta'];
+        $tope = $data['tope'];
 
-        $sql = "INSERT INTO users(username) VALUES ('$username')";
+        $sql = "INSERT INTO metas(meta_nombre,tope) VALUES ('$name','$tope')";
 
         if (mysqli_query($this->db, $sql)) {
             $msj = "Datos insertados correctamente";
@@ -37,12 +39,12 @@ class UserModel
         $this->cerrar_conexion();
     }
 
-    function UserList()
+    function GetMovimiento()
     {
         $this->abrir_conexion();
-        $sql        = "SELECT * FROM users ";
+        $sql        = "SELECT * FROM metas order by meta_id";
         $resultado  = mysqli_query($this->db, $sql);
-        
+
         while ($row = mysqli_fetch_assoc($resultado)) {
             $datos[] = $row;
         }
@@ -51,13 +53,21 @@ class UserModel
         $this->cerrar_conexion();
     }
 
-
-
-
-    function UserDelete($codigo)
+    function GetMovimientoPorId($id)
     {
         $this->abrir_conexion();
-        $sql = "DELETE FROM ofertas WHERE id_oferta ='$codigo'";
+        $sql        = "SELECT * FROM metas where meta_id = '{$id}'";
+        $resultado  = mysqli_query($this->db, $sql);
+        $row = mysqli_fetch_assoc($resultado);
+        return $row;
+        $this->cerrar_conexion();
+    }
+
+    function DeleteMovimiento($id)
+    {
+        $this->abrir_conexion();
+
+        $sql = "DELETE FROM metas WHERE meta_id ='$id'";
 
         if (mysqli_query($this->db, $sql)) {
             $msj = "Usuario eliminado satisfactoriamente";
@@ -65,22 +75,22 @@ class UserModel
             $msj = "error en la eliminacion " . mysqli_error($this->db);
         }
 
-        mysqli_close($this->db);
-
-        return $msj;
         $this->cerrar_conexion();
+        return $msj;
     }
 
-    function UserUpdate($id, $data)
+    function UpdateMovimiento($data)
     {
 
-        $id = $id;
-        $nombre = $data[0]['nombre'];
-        $descripcion = $data[0]['descripcion'];
+
+        $id = $data['id'];
+        $meta = $data['meta'];
+        $tope = $data['tope'];
 
 
+        $this->abrir_conexion();
 
-        $sql = "UPDATE ofertas SET nombre='$nombre',descripcion = '$descripcion' WHERE id='$id'";
+        $sql = "UPDATE metas set meta_nombre = '$meta' , tope = '$tope' WHERE meta_id = '$id'";
 
         if (mysqli_query($this->db, $sql)) {
             $msj = "usuario actualizado correctamente";
@@ -88,8 +98,7 @@ class UserModel
             $msj = "error en la actualizacion " . mysqli_error($this->db);
         }
 
-        mysqli_close($this->db);
-
         return $msj;
+        $this->cerrar_conexion();
     }
 }
